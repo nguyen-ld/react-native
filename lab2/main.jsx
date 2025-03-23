@@ -8,10 +8,14 @@ import {
 import Headers from "./headers";
 import Body from "./body";
 import Footer from "./footer";
-import { useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 
 const colors = ["white", "blue", "orange", "yellow", "green"];
+
+export const context = createContext();
+
 function Main() {
+	console.log("render");
 	const [timeUpdate, setTimeUpdate] = useState("Bạn chưa cập nhật");
 	const [users, setUsers] = useState({
 		name: "Chưa có tên ",
@@ -47,24 +51,23 @@ function Main() {
 		setUsers(_user);
 	}, []);
 	return (
-		<KeyboardAvoidingView
-			behavior={Platform.OS === "ios" ? "padding" : "height"}
-			style={{ flex: 1 }}
-		>
-			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-				<View style={{ flex: 1 }}>
-					<Headers user={users} />
-					<Body
-						randomColor={randomColor}
-						handleUpdateUser={handleUpdateUser}
-					/>
-					<Footer
-						timeUpdate={timeUpdate}
-						backGroundColor={backGroundColor}
-					/>
-				</View>
-			</TouchableWithoutFeedback>
-		</KeyboardAvoidingView>
+		<context.Provider value={{ users, timeUpdate, backGroundColor }}>
+			<KeyboardAvoidingView
+				behavior={Platform.OS === "ios" ? "padding" : "height"}
+				style={{ flex: 1 }}
+			>
+				<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+					<View style={{ flex: 1 }}>
+						<Headers />
+						<Body
+							randomColor={randomColor}
+							handleUpdateUser={handleUpdateUser}
+						/>
+						<Footer />
+					</View>
+				</TouchableWithoutFeedback>
+			</KeyboardAvoidingView>
+		</context.Provider>
 	);
 }
 export default Main;

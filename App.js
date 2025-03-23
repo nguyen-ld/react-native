@@ -1,5 +1,10 @@
-import { StatusBar } from "react-native";
-import Main from "./lab2/main";
+import { store } from "./lab3/redux/stores";
+import { Provider } from "react-redux";
+import Todos from "./lab3/Todo";
 export default function App() {
-	return <Main style={{ flex: 1, paddingTop: StatusBar.currentHeight }} />;
+	return (
+		<Provider store={store}>
+			<Todos />
+		</Provider>
+	);
 }

@@ -5,6 +5,7 @@ function Body(props) {
 	const [name, setName] = useState("");
 	const [image, setImage] = useState("");
 	const { randomColor, handleUpdateUser } = props;
+	console.log("re-render");
 	const handleChageInfo = () => {
 		if (name.length > 0 && image.length > 0) {
 			handleUpdateUser({ avatar: image, name });
